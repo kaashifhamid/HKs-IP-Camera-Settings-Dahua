@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.28.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.29.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.28.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.28.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.29.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.29.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -219,15 +219,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.28.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.29.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.28.0**
+**Version 1.29.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.28.0_x64.exe` | `<paste from release\SHA256_1.28.0.txt>` |
-| `HK_IP_Camera_Settings_Portable_1.28.0_x64.zip` | `<paste from release\SHA256_1.28.0.txt>` |
+| `HK_IP_Camera_Settings_Setup_1.29.0_x64.exe` | `0153c0b482853e329674c6ea13dcf4fb6b82e7dc94a1901eb2e7f0c1da088a58` |
+| `HK_IP_Camera_Settings_Portable_1.29.0_x64.zip` | `1f46f99f81e209b5a91eb90903e25fdb927cc56cfd91e9d1eadcc22249404025` |
 
 ---
 
@@ -235,6 +235,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.28.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.29.0** | **New:** the **HK logo** - the new sticker logo replaces the old blue camera icon as window / taskbar icon (sizes 16 to 128 px) and as the logo in the window header (sharper than before). No other change. |
 | **1.28.0** | **New:** live progress per camera in the Status column during Login & Fetch (*Waiting, Logging in, Reading settings, Retrying*); a read that times out is tried again (*Settings → General → Login and fetch → Retries on timeout*, 0-2, default 1) - never a change to a camera, never the login call, never a wrong password; **Timed out** is now its own result; incomplete readings are shown in amber and in the Issues sheet; button **Retry timed-out (n)**. |
 | **1.27.0** | **New:** **Ctrl+C** copies the highlighted (or ticked) rows as tab-separated text, **Ctrl+A** highlights all rows; right-click: *Copy selected / ticked / all shown rows*, *Copy this column*, **Copy as table (email / Teams)**. **Changed:** right-clicking a highlighted row keeps the whole highlight. |
 | **1.26.0** | **New:** **column presets** - *Default, Audit, Network, Streams, Security, Clock, Everything* and your own (*Settings → Table columns → Preset*: Save as, Rename, Delete); the list is next to the table. |
