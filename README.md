@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.30.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.32.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.30.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.30.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.32.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.32.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -52,7 +52,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **3. Details before login, and only cameras in the table**
 - **Scan** also uses Dahua's own network search (the same method as Dahua's search tools). Without any password, every device that answers shows its **model, serial number, firmware version, MAC address, device name and class** right after the scan.
-- Only cameras (fixed, dome, PTZ, thermal and traffic/ITC) are shown. NVRs/DVRs, switches, door stations, access controllers and other brands are **hidden from the table**, whether they were recognised by the search or after login. They are listed with the reason in the Excel *Scan Info* sheet and the log.
+- Only cameras (fixed, dome, PTZ, thermal and traffic/ITC) are shown. NVRs/DVRs, switches, door stations, access controllers and other brands are **hidden from the table**, whether they were recognised by the search or after login. They are listed on the Excel **Other devices** sheet (model, type, serial number, firmware, MAC, name) and in the log.
 - Devices that rejected the password stay in the table, with their details, so you can enter their own password and fetch again.
 - Devices found by the network search outside the scanned range (for example a camera left on a wrong subnet) are shown and marked *other subnet*.
 
@@ -72,7 +72,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **7. Open web interface** – click **🌐 Open** in any row (or select several cameras and use **Open Web**) to open the camera's own web page in your browser.
 
-**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, P2P, NTP off, clock issues, cameras whose **device name / camera name is still the factory default**, failed logins, and a model table with the **firmware versions and the oldest build per model**), an **Issues** sheet (one line per problem per camera - clock status, NTP switched off, default device / camera name, firmware that differs from the other cameras of the same model, model not in the SIRA list, DHCP on, failed logins - with a suggested action; the matching cells in the Cameras sheet are marked **amber**), a **Cameras** sheet with one row per camera channel (IP Address and Model are the first two columns and stay frozen while you scroll; the Channel column is hidden - unhide it in Excel if you need it), and a *Scan Info* sheet that documents the scan (devices that were not included are listed with their **model and serial number**). Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
+**8. Excel export** – a **Summary** sheet (site name, counts of cameras, SNMP v3 Yes/No, P2P, NTP off, clock issues, cameras whose **device name / camera name is still the factory default**, failed logins, and a model table with the **firmware versions and the oldest build per model**), an **Issues** sheet (one line per problem per camera - clock status, NTP switched off, default device / camera name, firmware that differs from the other cameras of the same model, model not in the SIRA list, DHCP on, failed logins - with a suggested action; the matching cells in the Cameras sheet are marked **amber**), a **Cameras** sheet with one row per camera channel (IP Address and Model are the first two columns and stay frozen while you scroll; the Channel column is hidden - unhide it in Excel if you need it), an **Other devices** sheet (NVRs, switches, door stations and other brands that are not IP cameras - see feature 24) and a *Scan Info* sheet that documents the scan (cameras that could not be read - login failed, timed out, error - are listed there with their **model and serial number**). Enter a **Site name** next to the login fields: it goes into the file name and the Summary. Choose whether to export all fields or only the visible ones.
 
 **9. Edit a camera's names** – select one camera and click **Edit Camera...** (or right-click → *Edit camera name...*) to change its **on-screen camera name** and its **device name**. Each change is read back from the camera to confirm it, and the old and new values are written to the log.
 
@@ -112,6 +112,10 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 **21. Copy rows** - **Ctrl+C** copies the **highlighted rows** (or, when none are highlighted, the **ticked** rows) as tab-separated text with a header row, which pastes straight into Excel cells; **Ctrl+A** highlights every row shown. The **right-click menu** also has *Copy selected rows*, *Copy ticked rows*, *Copy all shown rows*, *Copy this column* (one value per line) and **Copy as table (email / Teams)**, which puts a formatted table on the clipboard so it pastes as a real table into an email or a Teams message (Windows; Notepad and Excel get the same data). The copy contains the IP address and the columns you see, in the order shown, the **full** Status text, and only the rows that are shown (rows hidden by the filter are never copied). Right-clicking a row that is already highlighted keeps the whole highlight; *Edit camera name...* needs a single highlighted row.
 
 **22. Retry on timeout and live progress** - while **Login & Fetch** runs, the **Status** column shows what each camera is doing: *Waiting*, *Logging in*, *Reading settings*, *Retrying (1 of 1)*. A **read** that times out or is reset is tried again after a short pause with a longer wait (*Settings → General → Login and fetch → Retries on timeout*: 0, 1 or 2, default 1; 0 = no retry). **Nothing that changes a camera is ever retried, the login call itself is not retried automatically, and a wrong password is never retried**, so the lockout protection is untouched. A camera that does not answer the login in time is shown as **Timed out** (before: *Error*). If some reads still failed after the retry, the camera is shown in **amber** as *OK (n reads timed out - some fields may be empty)* and appears in the Excel **Issues** sheet, so a half-empty row is never mistaken for a complete one. The button **Retry timed-out (n)** above the table reads just these cameras again (not the ones that rejected the password). After two reads in a row fail even after the retry, the program stops retrying for that camera, so one hanging camera cannot slow the whole run down.
+
+**23. Retry failed logins** - the button **Retry failed logins (n)** (second row above the table, next to *Retry timed-out*) is for cameras that rejected the password, for example because a few cameras have their own. It opens a small window with its **own user name / password fields** (the boxes in the main window are not touched) and a list of the failed cameras: model and serial number, the reason and how many wrong logins each has had in this session. Tick the cameras to try and click **Try n cameras**: **every ticked camera gets exactly one attempt**. Cameras that log in are added to the table and remember their own credentials (used by Sync PC Time, Edit Camera, Stream Settings ...); the others stay red. The lockout protection is unchanged: a camera that **already rejected exactly this login cannot be ticked**, cameras that **look locked** (HTTP 403 / 429) or that have already refused 3 times are **not ticked by default** (ticking them anyway brings the usual *Account lockout risk* question), and a login is never repeated automatically.
+
+**24. Other devices sheet** - everything that is **not a Dahua IP camera** (NVR/DVR, switch, door station, access controller, other brands) is no longer only mentioned in *Scan Info*: the Excel file gets an **Other devices** sheet (between *Cameras* and *Scan Info*) with **Model, Device Type, Vendor, Serial Number, Firmware Version, MAC Address, Device Name, IP Address and Network Adapter**, sorted by type. The details come from Dahua's network search (no login needed) and, when a login worked, from the device itself, so a device that did not answer the search can have empty cells. With the **SIRA Reference No** column switched on, **NVR-type devices also show their SIRA reference** from the NVR list (*Not in SIRA list* if the model is missing; blank for device types the lists do not cover, such as door stations). The sheet only exists when such devices were found. *Scan Info* now lists only the **cameras that had a problem**, and its adapter table counts *Other devices* and *Cameras with a problem* separately.
 
 ---
 
@@ -188,7 +192,7 @@ The installer's uninstaller **keeps** your logs and settings.
 
 | Problem | What to try |
 |---|---|
-| A camera shows **Login failed – Wrong username/password** | That camera uses a different password. Tick only that camera, enter its credentials and click **Login & Fetch**. |
+| A camera shows **Login failed – Wrong username/password** | That camera uses a different password. Click **Retry failed logins**, enter the other credentials, tick the cameras and click **Try**. (You can still tick the camera, enter its credentials in the main window and click **Login & Fetch**.) |
 | The **SIRA Reference No** column says *SIRA list not loaded* / *Not in SIRA list* | *Not loaded*: open *Settings* and click *Refresh SIRA list* (internet needed; it also happens automatically at every start). *Not in SIRA list*: the exact model is not in the list. If *Refresh SIRA list* fails, open the log and send the line `SIRA refresh FAILED`. |
 | A camera shows **Login failed (3 failed logins this session)** | The program counts the wrong logins per camera in this run. From the third wrong login it asks before trying again, because many Dahua cameras lock the account for about 30 minutes after a few wrong passwords. The count starts again when the program is restarted; it does not know about attempts made by other PCs or by the NVR. |
 | A camera shows **Access refused (HTTP 403)** | The account is most likely **locked** after failed logins. Wait about 30 minutes or restart the camera, then try again. |
@@ -197,7 +201,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | **SNMP v3** shows *No* | The camera's firmware has no SNMP section (the camera answers "Bad Request"). Some models can get a custom firmware with SNMP. |
 | **SNMP v3** shows *Unknown* | The camera did not answer the SNMP request or returned something unexpected. Open the log, find the line `SNMP v3 check <ip>` and send it with the camera model so the detection can be extended. |
 | **P2P Enabled** shows *Unknown* or *Not supported* | *Not supported* = the camera's firmware has no P2P section. *Unknown* = the camera did not give a usable answer. Open the log, find the lines `P2P check <ip>` and send them with the camera model so the detection can be extended. |
-| A device is missing from the table | NVRs/DVRs, switches, door stations and non-Dahua devices are not shown as cameras. They appear with the reason in the Excel *Scan Info* sheet and in the log. |
+| A device is missing from the table | NVRs/DVRs, switches, door stations and non-Dahua devices are not shown as cameras. They are listed with their details on the Excel *Other devices* sheet and with the reason in the log. |
 | Model / serial / firmware are empty after **Scan** | The camera did not answer the network search (Wi-Fi isolation, another subnet, or a firewall that blocks UDP). Windows may ask whether the program may use the network: allow it on **private** networks. Login & Fetch still reads everything with the password. |
 | **Clock Status** says *Wrong time zone* | The camera's time itself is right but its zone is not (new cameras often have GMT+08:00). Tick **Also set time zone** and run **Sync PC Time**. |
 | The program does not open a second window | By design only one window runs at a time; a second start brings the open window to the front. |
@@ -219,15 +223,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.30.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.32.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.30.0**
+**Version 1.32.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.30.0_x64.exe` | `54243f1c30c8021318e50ca1b6a49d24eae20e748ea270af9d4181b5b580ba43` |
-| `HK_IP_Camera_Settings_Portable_1.30.0_x64.zip` | `fbba2acc181ab429f5465f74382a191192d415674ce45bfc7a869b6838963cd1` |
+| `HK_IP_Camera_Settings_Setup_1.32.0_x64.exe` | `f97af64b42fd96dce26a360f27e4039c4696bd21825195400871f59d18f10f2e |
+| `HK_IP_Camera_Settings_Portable_1.32.0_x64.zip` | `955b8d7b7738b3998239239e5c5bebcb4a985df4eedd033f31bf8a3b98f9ed4a` |
 
 ---
 
@@ -235,6 +239,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.30.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.32.0** | **New:** an **Other devices** sheet in the Excel export for everything that is not a Dahua IP camera (NVR, switch, door station, other brands): model, device type, vendor, serial number, firmware, MAC address, device name, IP address and adapter, sorted by type. The details come from Dahua's network search and, when a login worked, from the device itself. With the SIRA column on, **NVR-type devices show their SIRA reference** from the NVR list. *Scan Info* now lists only the cameras with a problem (login failed, timed out, error); its adapter table counts both kinds separately. Nothing else in the workbook changed. |
+| **1.31.0** | **New:** **Retry failed logins (n)** button next to *Retry timed-out*: a small window with its own user name / password, the list of cameras that rejected the login (model, serial, reason, wrong logins so far) and one attempt per ticked camera. A camera that already rejected exactly that login cannot be ticked; cameras that look locked (HTTP 403 / 429) or refused 3 times are not ticked by default and trigger the usual lockout warning if ticked. Cameras that log in keep their own credentials. |
 | **1.30.0** | **Changed:** the **SIRA list** is now read from Dahua's new end points (`…/api/mena/partnerDubaiSira/dubai_sira_list?menu_id=1` for IPC and `?menu_id=3` for NVR) instead of the old address. Nothing changes in how you use it: the *SIRA Reference No* column, *Refresh SIRA list*, the automatic update at start, the offline list and the models that are treated as the same model work as before. A list that cannot be downloaded still keeps its last successful download, and the log line `SIRA refresh FAILED` now shows the new address, the HTTP status and the start of the reply. |
 | **1.29.0** | **New:** the **HK logo** - the new sticker logo replaces the old blue camera icon as window / taskbar icon (sizes 16 to 128 px) and as the logo in the window header (sharper than before). No other change. |
 | **1.28.0** | **New:** live progress per camera in the Status column during Login & Fetch (*Waiting, Logging in, Reading settings, Retrying*); a read that times out is tried again (*Settings → General → Login and fetch → Retries on timeout*, 0-2, default 1) - never a change to a camera, never the login call, never a wrong password; **Timed out** is now its own result; incomplete readings are shown in amber and in the Issues sheet; button **Retry timed-out (n)**. |
