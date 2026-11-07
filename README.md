@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.32.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.34.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.32.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.32.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.34.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.34.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -42,7 +42,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 ## ✨ What it does
 
 **1. Finds the cameras on the right network**
-- Lists every network adapter of your PC (tick box, **adapter name** and **IP address**) and scans **only the networks you tick**. The range that is scanned is the network of the adapter; to scan a custom range, add it under **Extra ranges** in **⚙ Settings**, for example `192.168.1.50-192.168.1.120`.
+- Lists every network adapter of your PC (tick box, **adapter name** and **IP address**) and scans **only the networks you tick**. The range that is scanned is the network of the adapter; to scan a custom range, add it under **Extra ranges** in **⚙ Settings**, for example `192.168.1.50-192.168.1.120`. If an extra range contains **public internet addresses**, the program asks first (default *No*, see feature 25).
 - Virtual / VPN adapters are unticked by default. Networks up to **/16** (for example /23 or /22 subnets) are scanned **in full**. A larger network is narrowed to the /24 around your PC and a warning below the adapter table says so; you can add more ranges (and change the scanned ports) under **⚙ Settings**. Before a scan that is expected to take long (about 45 seconds or more), the program shows the estimated time and asks for confirmation, and a **Stop scan** button ends it at any time, keeping the devices found so far.
 
 **2. One login for all cameras**
@@ -68,7 +68,7 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 
 **5. Clock check and time sync** – the **Clock Status** column shows at a glance which cameras have a wrong clock: *Wrong time zone* (the time itself is right), *Zone differs from PC*, *Never set* (factory date) or *Off by ...*. **Tick clock issues** ticks only those cameras, ready for **Sync PC Time**. Cameras that reject the password still show their clock (read without a password through ONVIF), but can only be synchronised after a login. Sync: one click sets the clock of all ticked cameras to your PC time and **verifies** the result. Tick **Also set time zone** next to the button to set each camera's time zone to your PC's as well (read back to confirm; the old and new zone are logged). Cameras that keep a wrong time (for example because NTP is enabled) are reported with the reason.
 
-**6. Snapshots** – tick the cameras and click **Snapshot**. Every camera saves a JPEG with the **camera name in the bottom-right corner**, named like `2026-10-09 095822 AK0B69APAG01456.jpg` (date, time, serial number).
+**6. Snapshots** – tick the cameras and click **Snapshot**. Every camera saves a JPEG with the **camera name in the bottom-right corner**, named like `2026-10-09 095822 AK0B69APAG01456.jpg` (date, time, serial number). Snapshots can show people, so they are personal data: the default folder is the program's own *Snapshots* folder (not *Pictures*, which is often synchronised to a cloud), a short **privacy reminder** appears before the first snapshot of a program run, and *Settings* can **delete old snapshots automatically** (see feature 26).
 
 **7. Open web interface** – click **🌐 Open** in any row (or select several cameras and use **Open Web**) to open the camera's own web page in your browser.
 
@@ -116,6 +116,10 @@ Click **More info → Run anyway**. You can confirm that the download is genuine
 **23. Retry failed logins** - the button **Retry failed logins (n)** (second row above the table, next to *Retry timed-out*) is for cameras that rejected the password, for example because a few cameras have their own. It opens a small window with its **own user name / password fields** (the boxes in the main window are not touched) and a list of the failed cameras: model and serial number, the reason and how many wrong logins each has had in this session. Tick the cameras to try and click **Try n cameras**: **every ticked camera gets exactly one attempt**. Cameras that log in are added to the table and remember their own credentials (used by Sync PC Time, Edit Camera, Stream Settings ...); the others stay red. The lockout protection is unchanged: a camera that **already rejected exactly this login cannot be ticked**, cameras that **look locked** (HTTP 403 / 429) or that have already refused 3 times are **not ticked by default** (ticking them anyway brings the usual *Account lockout risk* question), and a login is never repeated automatically.
 
 **24. Other devices sheet** - everything that is **not a Dahua IP camera** (NVR/DVR, switch, door station, access controller, other brands) is no longer only mentioned in *Scan Info*: the Excel file gets an **Other devices** sheet (between *Cameras* and *Scan Info*) with **Model, Device Type, Vendor, Serial Number, Firmware Version, MAC Address, Device Name, IP Address and Network Adapter**, sorted by type. The details come from Dahua's network search (no login needed) and, when a login worked, from the device itself, so a device that did not answer the search can have empty cells. With the **SIRA Reference No** column switched on, **NVR-type devices also show their SIRA reference** from the NVR list (*Not in SIRA list* if the model is missing; blank for device types the lists do not cover, such as door stations). The sheet only exists when such devices were found. *Scan Info* now lists only the **cameras that had a problem**, and its adapter table counts *Other devices* and *Cameras with a problem* separately.
+
+**25. Authorisation notice and public-range guard** - the first time the program starts (and again only if the notice text changes) a notice asks you to confirm that you are **authorised to manage the networks and devices you use it on**. Scanning or logging in without permission is a criminal offence in many countries. Your confirmation is stored in the settings with its date; you can read the notice again under **⚙ Settings > Legal**, and if you do not accept, the program closes. Separately, an **extra range you type** (*Settings > Extra ranges*, or `--targets` on the command line) that contains **public internet addresses** now asks before scanning (default *No*); on the command line it stops unless you add `--allow-public`. The ranges of your own network adapters are not affected. The program still never guesses passwords: it uses only the login you type, tries each camera once per click and does not repeat a login that a camera already rejected. The command line prints a one-line reminder.
+
+**26. Privacy of snapshots and exports** - (a) **Snapshot folder:** the default is the program's own *Snapshots* folder; a folder you chose before is kept. (b) **Privacy reminder** before the first snapshot of each program run (switch off in *Settings > Snapshots*). (c) **Delete snapshots older than N days** (*Settings > Snapshots*, **off by default**; choices 7 / 30 / 90 / 180 days): at program start and after each snapshot run, files that **this program saved** in the snapshot folder (named like `2026-11-06 101500 SERIAL.jpg`) and that are older than N days are deleted **permanently**. Other files, sub-folders and links are never touched, and switching it on asks for confirmation. (d) **Anonymise the Excel export** (*Settings > Table and Excel*, also `--anonymise` on the command line, **off by default**): IP addresses, MAC addresses, serial numbers and camera / device names are replaced by **stable aliases** (the same original always gets the same alias) in every sheet, the site name becomes *Site*, and the **key** to the replacements is saved next to the file as `..._KEEP-PRIVATE_key.csv` - **never send the key**. Netmasks, loopback and link-local addresses stay as they are, and model and firmware stay readable. *Compare Scans* needs normal (not anonymised) exports, because the aliases differ from file to file.
 
 ---
 
@@ -183,6 +187,8 @@ The installer's uninstaller **keeps** your logs and settings.
 
 - The program talks **only to the cameras on your own network** (it sends a local search message to find them; it does not leave your network). It makes **two** kinds of internet connection, and nothing else: (1) the download of the public SIRA list from Dahua's SIRA server (see 12), and (2) the **optional, off-by-default update check** (see 19), a single request to GitHub for the latest published version. Nothing about your cameras, network or PC is sent in either, and the program has no telemetry. As with any website you visit, the server sees the public IP address of your connection, and both requests also carry the program name and version number. The automatic SIRA download and the update check can each be switched off in *Settings*, and the program works fully without internet.
 - The **password is never saved** – not in the settings file and not in the log.
+- **Use it only where you are authorised.** The program asks you to confirm this on the first start (feature 25), asks before scanning public internet addresses you typed, and never guesses passwords.
+- **Snapshots, exports and logs can contain personal data** (images of people, camera and device names, network details). Keep them in a protected place, share them only where you are authorised, and delete them when they are no longer needed - *Settings* can anonymise the Excel export and delete old snapshots automatically (feature 26).
 - The program only **reads** from your cameras, except for the actions you start yourself: **Sync PC Time** (changes the camera clock and, if ticked, its time zone), **Edit Camera** (changes names) and **Stream Settings** (changes stream parameters, after a preview and a confirmation, with read-back and undo). Every change is written to the log with the old and new value.
 - Logs and diagnostic bundles contain device information (IP, model, serial number, firmware) but **never passwords**. Keep that in mind before sharing them.
 
@@ -214,6 +220,8 @@ The installer's uninstaller **keeps** your logs and settings.
 | The Status says **Timed out** | The camera did not answer the login in time. It may be busy, restarting, or the network blocks the web port. Click **Retry timed-out** (above the table) after a moment; it reads only those cameras again. |
 | The Status says **OK (n reads timed out - some fields may be empty)** | The camera logged in, but some settings did not arrive even after the retry (amber row). Click **Retry timed-out**; if it happens again, raise *Retries on timeout* in Settings or check the network and the load on the camera. The log names the reads that failed (line `timed out even after the retry`). |
 | **Copy as table** pastes tab-spaced text, not a table | The table format needs Windows and a program that accepts formatted text (Outlook, Teams, Word, Excel). The status line under the table says when the program had to fall back to plain text. |
+| The program asks about **public (internet) addresses** before a scan | An *Extra range* you typed contains addresses outside your private networks. Scan them only if you own them or are authorised to scan them; answer *No* to cancel, or correct the range in *Settings*. |
+| *Compare Scans* shows everything as new / removed | One of the files was exported with **Anonymise the Excel export** switched on. The aliases differ from file to file, so compare normal exports. |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
 
 ---
@@ -223,15 +231,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.32.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.34.0_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.32.0**
+**Version 1.34.0**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.32.0_x64.exe` | `f97af64b42fd96dce26a360f27e4039c4696bd21825195400871f59d18f10f2e |
-| `HK_IP_Camera_Settings_Portable_1.32.0_x64.zip` | `955b8d7b7738b3998239239e5c5bebcb4a985df4eedd033f31bf8a3b98f9ed4a` |
+| `HK_IP_Camera_Settings_Setup_1.34.0_x64.exe` | `57f643bfb217e8dc7d4839b2d634da66ccc29496c84798b1a7781ffdf32b984c` |
+| `HK_IP_Camera_Settings_Portable_1.34.0_x64.zip` | `2b0e9321639ba40b25988bec0dd4e855a3a0914dad16a9e6648ca50549287043` |
 
 ---
 
@@ -239,6 +247,8 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.32.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.34.0** | **Privacy of snapshots and exports:** the default snapshot folder is now the program's own *Snapshots* folder instead of *Pictures* (a folder you already chose is kept); a **privacy reminder** before the first snapshot of a program run; optional **automatic deletion of old snapshots** (off by default; only files this program saved, only in the snapshot folder; confirmation when switched on); optional **Anonymise the Excel export** and `--anonymise` (IP / MAC addresses, serial numbers and names become stable aliases in every sheet, key file saved separately). Nothing else changed. |
+| **1.33.0** | **Authorisation notice and public-range guard:** a notice on the first start asks you to confirm that you are authorised to manage the networks and devices you use the program on (stored with its date, readable again under *Settings > Legal*); an **extra range you type** that contains public internet addresses asks first (default *No*), and `--targets` with public addresses stops unless `--allow-public` is given. Your own adapters' ranges are not affected. |
 | **1.32.0** | **New:** an **Other devices** sheet in the Excel export for everything that is not a Dahua IP camera (NVR, switch, door station, other brands): model, device type, vendor, serial number, firmware, MAC address, device name, IP address and adapter, sorted by type. The details come from Dahua's network search and, when a login worked, from the device itself. With the SIRA column on, **NVR-type devices show their SIRA reference** from the NVR list. *Scan Info* now lists only the cameras with a problem (login failed, timed out, error); its adapter table counts both kinds separately. Nothing else in the workbook changed. |
 | **1.31.0** | **New:** **Retry failed logins (n)** button next to *Retry timed-out*: a small window with its own user name / password, the list of cameras that rejected the login (model, serial, reason, wrong logins so far) and one attempt per ticked camera. A camera that already rejected exactly that login cannot be ticked; cameras that look locked (HTTP 403 / 429) or refused 3 times are not ticked by default and trigger the usual lockout warning if ticked. Cameras that log in keep their own credentials. |
 | **1.30.0** | **Changed:** the **SIRA list** is now read from Dahua's new end points (`…/api/mena/partnerDubaiSira/dubai_sira_list?menu_id=1` for IPC and `?menu_id=3` for NVR) instead of the old address. Nothing changes in how you use it: the *SIRA Reference No* column, *Refresh SIRA list*, the automatic update at start, the offline list and the models that are treated as the same model work as before. A list that cannot be downloaded still keeps its last successful download, and the log line `SIRA refresh FAILED` now shows the new address, the HTTP status and the start of the reply. |
