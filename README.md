@@ -22,12 +22,12 @@
 
 ## ⬇️ Download
 
-Current version: **1.35.0**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
+Current version: **1.35.1**. Go to the **[Releases page](https://github.com/kaashifhamid/HKs-IP-Camera-Settings-Dahua/releases/latest)** and download one of the two files:
 
 | File | Best for | Notes |
 |---|---|---|
-| **`HK_IP_Camera_Settings_Setup_1.35.0_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
-| **`HK_IP_Camera_Settings_Portable_1.35.0_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
+| **`HK_IP_Camera_Settings_Setup_1.35.1_x64.exe`** | Normal use | Installer. Installs for your user only, **no administrator rights needed**. Adds a Start Menu entry and an optional desktop shortcut. |
+| **`HK_IP_Camera_Settings_Portable_1.35.1_x64.zip`** | USB stick / no installation | Unzip anywhere and run `HK_IP_Camera_Settings.exe`. Logs and settings stay in a `data` folder next to the program. |
 
 > **Requirements:** Windows 10 or 11, 64-bit. Your PC must be on the same network (or a routed network) as the cameras.
 > No Python or other software is needed – everything is included.
@@ -224,6 +224,7 @@ The installer's uninstaller **keeps** your logs and settings.
 | **Copy as table** pastes tab-spaced text, not a table | The table format needs Windows and a program that accepts formatted text (Outlook, Teams, Word, Excel). The status line under the table says when the program had to fall back to plain text. |
 | The program asks about **public (internet) addresses** before a scan | An *Extra range* you typed contains addresses outside your private networks. Scan them only if you own them or are authorised to scan them; answer *No* to cancel, or correct the range in *Settings*. |
 | *Compare Scans* shows everything as new / removed | One of the files was exported with **Anonymise the Excel export** switched on. The aliases differ from file to file, so compare normal exports. |
+| Many devices show *this PC has no address in its subnet* | The cameras answered the network search (it works across subnets) but your PC cannot open their web page. Add a second address in the cameras' subnet to the PC's network adapter (Windows: adapter properties > Internet Protocol Version 4 > Advanced > Add, for example `192.168.2.200` / `255.255.255.0`) and scan again. An *Extra range* alone does not help. |
 | Windows warns when starting | See [First start: Windows SmartScreen](#first-start-windows-smartscreen). |
 
 ---
@@ -233,15 +234,15 @@ The installer's uninstaller **keeps** your logs and settings.
 Compare the SHA-256 checksum of the file you downloaded with the values below (PowerShell):
 
 ```powershell
-Get-FileHash .\HK_IP_Camera_Settings_Setup_1.35.0_x64.exe -Algorithm SHA256
+Get-FileHash .\HK_IP_Camera_Settings_Setup_1.35.1_x64.exe -Algorithm SHA256
 ```
 
-**Version 1.35.0**
+**Version 1.35.1**
 
 | File | SHA-256 |
 |---|---|
-| `HK_IP_Camera_Settings_Setup_1.35.0_x64.exe` | _6113a3b4989754bd9c3a7374ba926425f688e1f45beaa9b1aa80ae15a4fe8e96_ |
-| `HK_IP_Camera_Settings_Portable_1.35.0_x64.zip` | _3537977fce2ed292df37c74fbe6463ffe06610045ff74f117f7db19e2ac5ce9a_ |
+| `HK_IP_Camera_Settings_Setup_1.35.1_x64.exe` | _e3b4abdf4ca5c1826484f763e184b725c507aab835f08008bd30986d8d124766_ |
+| `HK_IP_Camera_Settings_Portable_1.35.1_x64.zip` | _1030a17f84edb969228c0fd0a7f2e50c7504cbd4dd0f7db132b291d9459af69e_ |
 
 **Version 1.34.0**
 
@@ -256,6 +257,7 @@ Get-FileHash .\HK_IP_Camera_Settings_Setup_1.35.0_x64.exe -Algorithm SHA256
 
 | Version | Highlights |
 |---|---|
+| **1.35.1** | **Fixes:** ITC cameras (for example ITC215-PW6M-LZF) are no longer excluded as *Not Dahua* when the camera reports the vendor name *General* (*Private* is accepted too; the device class / model check still decides whether it is an IP camera, and other brands are still excluded). A device that answers the network search from a subnet your PC has no address in now says so in the **Status** column and what to do, instead of *may be busy or restarting*. A DSS server announcing the address 0.0.0.0 is ignored (no duplicate). *Login & Fetch* with nothing scanned or ticked shows a message and one log line instead of a traceback. |
 | **1.35.0** | **Legal wording and licence notices:** SIRA reference numbers are labelled **informational only - confirm with SIRA** (Settings, Excel *Summary* and *Other devices* sheets, README); the installer and the portable zip now include **THIRD-PARTY-NOTICES.txt** (licences of the Python runtime and libraries), with a Start Menu entry, a tick box on the last installer page and a **Third-party notices...** button in *Settings > Legal*. No change to scanning or to what is read from or written to cameras. |
 | **1.34.0** | **Privacy of snapshots and exports:** the default snapshot folder is now the program's own *Snapshots* folder instead of *Pictures* (a folder you already chose is kept); a **privacy reminder** before the first snapshot of a program run; optional **automatic deletion of old snapshots** (off by default; only files this program saved, only in the snapshot folder; confirmation when switched on); optional **Anonymise the Excel export** and `--anonymise` (IP / MAC addresses, serial numbers and names become stable aliases in every sheet, key file saved separately). Nothing else changed. |
 | **1.33.0** | **Authorisation notice and public-range guard:** a notice on the first start asks you to confirm that you are authorised to manage the networks and devices you use the program on (stored with its date, readable again under *Settings > Legal*); an **extra range you type** that contains public internet addresses asks first (default *No*), and `--targets` with public addresses stops unless `--allow-public` is given. Your own adapters' ranges are not affected. |
